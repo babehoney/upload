@@ -30,7 +30,7 @@
     </style>
   </head>
   <body>
-    <form enctype="multipart/form-data" name='imageform' role="form" id="imageform" method="post" action="ajax.php">
+    <!-- <form enctype="multipart/form-data" name='imageform' role="form" id="imageform" method="post" action="ajax.php"> -->
     <div class="image-editor">
       <input type="file"  name="images" id="images" class="cropit-image-input">
       <div class="cropit-preview"></div>
@@ -43,7 +43,7 @@
         <input type="hidden" name="image-data" value="" class="hidden-image-data" />
       <button class="export" name="image_upload" id="image_upload">Export</button>
     </div>
-    </form>
+    <!-- </form> -->
 
     <script src="js/script.js"></script>
     <script>
@@ -61,31 +61,31 @@
         });
          
 
-        $('.export').click(function() {
-          var imageData = $('.image-editor').cropit('export');
-          var croppng = imageData.toDataURL("image/png");
-          // window.open(imageData);
-          // alert(imageData);
-      $.ajax({
-type: 'POST',
-url: 'cropit.php',
-data: {
-pngimageData: croppng,
-filename: 'test.png'
-},
-success: function(output) {
-}
-})
+        // $('.export').click(function() {
+           // var imageData = $('.image-editor').cropit('export');
+         // alert(imageData);
     
-         
-        });
-         //Set value of hidden input to base64
-    $("#hidden_base64").val(imageData);
-    //Pause form submission until input is populated
-    window.setTimeout(function() {
-        document.imageform.submit();
-        alert(imageData);
-    }, 1000);
+         $('.export').click(function() {
+    var imageData = $('.image-editor').cropit('export');
+    $.ajax({
+        type: "POST",
+        url: "cropit.php?",
+        data: "imageData="+ imageData,
+        success: function(data){
+            swal({
+              title: "awesome!",
+              text: "Your image has been updated.",
+              type: "success",
+              showCancelButton: false,
+              closeOnConfirm: true
+            },
+            function(){
+              //location.reload();
+            });     
+        }
+    });
+});
+      
     
            });
     </script>
